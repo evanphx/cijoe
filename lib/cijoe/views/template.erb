@@ -19,7 +19,7 @@
             <li>
               <span class="date"><%= pretty_time(joe.current_build.started_at) if joe.current_build %></span> &raquo;
               <% if joe.current_build.sha %>
-                Building <a href="<%= joe.url %>/commits/<%= joe.current_build.sha %>"><%= joe.current_build.short_sha %></a> <small>(pid: <%= joe.pid %>)</small>
+                Building <a href="<%= joe.url %>/commit/<%= joe.current_build.sha %>"><%= joe.current_build.short_sha %></a> <small>(pid: <%= joe.pid %>)</small>
               <% else %>
                 Build starting...
               <% end %>
