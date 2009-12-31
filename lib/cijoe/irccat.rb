@@ -6,7 +6,7 @@ class CIJoe
           include CIJoe::Irccat
         end
 
-        puts "Loaded irccat notifier"
+        puts "Loaded irccat notifier: port #{config[:port]}"
       else
         puts "Can't load irccat notifier."
         puts "Please add the following to your project's .git/config:"
@@ -26,19 +26,19 @@ class CIJoe
     end
 
     def notify
-      last_line = clean_output.split(/\n/).last
+      last_line = output.split(/\n/).last
 
       if failed?
         speak "CI: Commit #{short_sha} failed. #{commit.url}"
       else
-        speak "CI: #{project}: #{short_sha} successful. #{last_line}"
+        speak "CI: #{project}: #{short_sha} successful: #{last_line}"
       end
     end
 
     private
 
     def speak(str)
-      sock = TCPSocket.new(config['host'], config['port'].to_i)
+      sock = TCPSocket.new("127.0.0.1", Irccat.config[:port])
       sock.puts str
       sock.close
     end
